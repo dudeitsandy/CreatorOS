@@ -2,7 +2,7 @@ import logging
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
 
 from app.api import creators, messages, webhooks
@@ -78,3 +78,92 @@ app.include_router(webhooks.router, prefix="/webhooks", tags=["webhooks"])
 async def health_check() -> dict:
     """Return service health status."""
     return {"status": "ok"}
+
+
+@app.get("/", response_class=HTMLResponse)
+async def landing():
+    return HTMLResponse(content="""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CreatorOS</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+        .badge {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 32px;
+            letter-spacing: 0.5px;
+        }
+        .badge span { color: #44cc88; margin-right: 6px; }
+        h1 {
+            font-size: clamp(48px, 8vw, 80px);
+            font-weight: 800;
+            letter-spacing: -3px;
+            line-height: 1;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 0%, #888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        p {
+            font-size: 18px;
+            color: #666;
+            max-width: 480px;
+            text-align: center;
+            line-height: 1.6;
+            margin-bottom: 48px;
+        }
+        .pills {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 48px;
+        }
+        .pill {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 8px;
+            padding: 10px 18px;
+            font-size: 13px;
+            color: #aaa;
+        }
+        .pill strong { color: #fff; display: block; font-size: 15px; margin-bottom: 2px; }
+        .footer {
+            position: fixed;
+            bottom: 24px;
+            font-size: 12px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="badge"><span>●</span> System operational</div>
+    <h1>CreatorOS</h1>
+    <p>Intelligent messaging triage for content creators. Every fan scored, routed, and handled — so you focus on what matters.</p>
+    <div class="pills">
+        <div class="pill"><strong>AI Scoring</strong>Value per message</div>
+        <div class="pill"><strong>Smart Routing</strong>High value → you first</div>
+        <div class="pill"><strong>Auto-Reply</strong>Low value handled</div>
+        <div class="pill"><strong>Live Dashboard</strong>Full inbox visibility</div>
+    </div>
+    <div class="footer">CreatorOS — Private Beta</div>
+</body>
+</html>""")
