@@ -22,12 +22,17 @@ def score_value(content: str, fan_spend: float = 0.0) -> float:
     """
     score = 0.5
 
-    words = set(content.lower().split())
+    import re
+    words = set(re.findall(r"[a-z']+", content.lower()))
     buying_hits = len(words & _BUYING_SIGNALS)
     low_effort_hits = len(words & _LOW_EFFORT)
 
     score += buying_hits * 0.1
     score -= low_effort_hits * 0.15
+
+    # Short low-effort messages (≤3 words, only greetings) get a bigger penalty
+    if len(words) <= 3 and words <= (_LOW_EFFORT | {"wyd", "wbu", "u", "there"}):
+        score -= 0.25
 
     if fan_spend > 500:
         score += 0.2
