@@ -164,6 +164,18 @@ async def landing():
         <div class="pill"><strong>Auto-Reply</strong>Low value handled</div>
         <div class="pill"><strong>Live Dashboard</strong>Full inbox visibility</div>
     </div>
+    <a href="/webhooks/dashboard?token=7b59ff4cda0d628a9d6184ace0ba5082ee61dbd1e38faee936d27e3b25494fd4" style="
+        background: #fff;
+        color: #000;
+        text-decoration: none;
+        padding: 14px 32px;
+        border-radius: 10px;
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: -0.3px;
+        margin-bottom: 48px;
+        display: inline-block;
+    ">View Inbox →</a>
     <div class="footer">CreatorOS — Private Beta</div>
 </body>
 </html>""")
