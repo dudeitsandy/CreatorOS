@@ -1,0 +1,17 @@
+fastapi
+uvicorn[standard]
+sqlalchemy
+asyncpg
+alembic
+redis
+celery
+httpx
+sentence-transformers
+python-telegram-bot
+twilio
+pydantic
+pydantic-settings
+python-dotenv
+cryptography
+pytest
+pytest-asyncio
